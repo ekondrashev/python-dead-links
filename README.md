@@ -6,6 +6,9 @@ Please suggest a PR with a python code implementing the below contract. Remember
 ## Input arguments
 The program expects target url to take HTML(and check for dead links) from.
 
+Example command line:
+`python <your_python_script> <url>`
+
 ## Output format
 
 ```
@@ -24,4 +27,6 @@ The program expects target url to take HTML(and check for dead links) from.
 }
 ```
 
-It is ok to use YML/XML or any other format considering the test verifying this format is availabl
+It is ok to use YML/XML or any other format (not only JSON) considering the test verifying this format is available.
+
+*N.B.: it worth to think of various edge cases related to CLI usage, potential connection and/or content issues and cover them in your code*
