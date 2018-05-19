@@ -1,5 +1,7 @@
 # Step 1
-Please suggest a PR with a python code implementing the below contract. Remember to implement a test verifying the output is correct also.
+Please suggest a PR with 
+1. a python script implementing the below contrac;
+2. a test verifying the system output produced by your script is correct also
 
 # Python dead links
 
@@ -28,5 +30,3 @@ Example command line:
 ```
 
 It is ok to use YML/XML or any other format (not only JSON) considering the test verifying this format is available.
-
-*N.B.: it worth to think of various edge cases related to CLI usage, potential connection and/or content issues and cover them in your code*
