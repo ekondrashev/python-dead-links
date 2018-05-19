@@ -1,7 +1,8 @@
 # Step 1
 Please suggest a PR with 
-1. a python script implementing the below contrac;
-2. a test verifying the system output produced by your script is correct also
+1. a python script implementing the below contract
+2. a test verifying system output produced by the script is correct.
+2.1 hint: the test should call the script catching the output and verifying its correctness asseting against some constant expected value
 
 # Python dead links
 
