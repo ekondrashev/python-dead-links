@@ -81,3 +81,9 @@ def check_url(url):
             result['50x']['urls'].append(link)
             result['50x']['size']+=1
         return result
+
+
+if __name__ == '__main__':
+    url = 'http://massage.zt.ua'
+    #url = 'http://allmassage.com.ua'
+    print(json.dumps(check_url(url), indent=4))
