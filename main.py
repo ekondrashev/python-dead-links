@@ -27,3 +27,20 @@ class Links(object):
 
     def __len__(self):
         return len([link for link in self])
+
+
+class FilteredLinks(object):
+
+    def __init__(self, links, live):
+        self._links = links
+        self._live = live
+
+    def __iter__(self):
+        for link in self._links:
+            response = requests.head(link, allow_redirects=True)
+            if (self._live and response.status_code==requests.codes.ok)\
+                or (not self._live and response.status_code!=requests.codes.ok):
+                yield (response.status_code, response.url)
+
+    def __len__(self):
+        return len([link for link in self])
