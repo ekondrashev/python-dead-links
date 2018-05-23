@@ -50,3 +50,9 @@ class LiveLinks(FilteredLinks):
 
     def __init__(self, links):
         super(LiveLinks, self).__init__(links, True)
+
+
+class DeadLinks(FilteredLinks):
+
+    def __init__(self, links):
+        super(DeadLinks, self).__init__(links, False)
