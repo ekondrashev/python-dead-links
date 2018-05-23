@@ -73,3 +73,11 @@ def check_url(url):
         'dead': len(DeadLinks(all_links)),
         'total': len(all_links)
     }
+    for (status, link) in LiveLinks(all_links):
+        if status==404:
+            result['404']['urls'].append(link)
+            result['404']['size']+=1
+        elif status>=500:
+            result['50x']['urls'].append(link)
+            result['50x']['size']+=1
+        return result
