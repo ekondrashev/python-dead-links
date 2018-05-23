@@ -56,3 +56,20 @@ class DeadLinks(FilteredLinks):
 
     def __init__(self, links):
         super(DeadLinks, self).__init__(links, False)
+
+
+def check_url(url):
+    all_links = Links(url)
+    result = {
+        'url': url,
+        '404': {
+            'size': 0,
+            'urls': []
+        },
+        '50x': {
+            'size': 0,
+            'urls': []
+        },
+        'dead': len(DeadLinks(all_links)),
+        'total': len(all_links)
+    }
