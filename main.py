@@ -44,3 +44,9 @@ class FilteredLinks(object):
 
     def __len__(self):
         return len([link for link in self])
+
+
+class LiveLinks(FilteredLinks):
+
+    def __init__(self, links):
+        super(LiveLinks, self).__init__(links, True)
