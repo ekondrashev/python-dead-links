@@ -2,6 +2,7 @@
 #-*- coding:utf-8 -*-
 import requests
 from bs4 import BeautifulSoup, SoupStrainer
+import sys
 import json
 
 
@@ -38,8 +39,8 @@ class FilteredLinks(object):
     def __iter__(self):
         for link in self._links:
             response = requests.head(link, allow_redirects=True)
-            if (self._live and response.status_code==requests.codes.ok)\
-                or (not self._live and response.status_code!=requests.codes.ok):
+            if (self._live and response.ok)\
+                or (not self._live and not response.ok):
                 yield (response.status_code, response.url)
 
     def __len__(self):
@@ -84,6 +85,4 @@ def check_url(url):
 
 
 if __name__ == '__main__':
-    url = 'http://massage.zt.ua'
-    #url = 'http://allmassage.com.ua'
-    print(json.dumps(check_url(url), indent=4))
+    print(json.dumps(check_url(sys.argv[1]), indent=4))
