@@ -2,7 +2,7 @@
 #-*- coding:utf-8 -*-
 import unittest
 from http.server import SimpleHTTPRequestHandler, HTTPServer
-from subprocess import Popen, PIPE, STDOUT
+from subprocess import Popen, PIPE
 from threading import Thread
 import socket
 import json
@@ -42,43 +42,42 @@ class OutputTests(unittest.TestCase):
 
     def check_html(self, page):
         self._url += page
-        p = Popen(['env\\scripts\\python.exe', 'main.py', self._url], stderr=STDOUT, stdout=PIPE, shell=True)
-        z=p.stdout.read()
-        print(str(z))
-        return json.loads(z)
+        output, err = Popen(['python', 'main.py', self._url], stdout=PIPE).communicate()
+        return json.loads(output), err
 
     def test_url_to_check(self):
         """Verification of the tested url-address"""
-        actual = self.check_html('index.html').get('url')
-        self.assertEqual(actual, self._url)
+        actual, err = self.check_html('index.html')
+        self.assertEqual(actual.get('url'), self._url)
+        self.assertIsNone(err, "No errors found")
 
-    @unittest.skip('')
     def test_urls_404(self):
         """Checking URLs with status 404"""
-        actual = self.check_html('index.html').get('404')
-        self.assertEqual(actual.get('size'), 0)
-        self.assertEqual(actual.get('urls'), [])
-        self.assertEqual(len(actual.get('urls')), actual.get('size'))
+        actual, err = self.check_html('index.html')
+        self.assertEqual(actual.get('404').get('size'), 2)
+        #self.assertEqual(actual.get('404').get('urls'), [])
+        self.assertEqual(len(actual.get('404').get('urls')), actual.get('404').get('size'))
+        self.assertIsNone(err, "No errors found")
 
-    @unittest.skip('')
     def test_urls_50x(self):
         """Checking URLs with status 50x"""
-        actual = self.check_html('index.html').get('50x')
-        self.assertEqual(actual.get('size'), 0)
-        self.assertEqual(actual.get('urls'), [])
-        self.assertEqual(len(actual.get('urls')), actual.get('size'))
+        actual, err = self.check_html('index.html')
+        self.assertEqual(actual.get('50x').get('size'), 0)
+        #self.assertEqual(actual.get('50x').get('urls'), [])
+        self.assertEqual(len(actual.get('50x').get('urls')), actual.get('50x').get('size'))
+        self.assertIsNone(err, "No errors found")
 
-    @unittest.skip('')
     def test_total_dead_urls(self):
         """Checking the total number of broken URLs"""
-        actual = self.check_html('index.html').get('dead')
-        self.assertEqual(actual, 0)
+        actual, err = self.check_html('index.html')
+        self.assertEqual(actual.get('dead'), 2)
+        self.assertIsNone(err, "No errors found")
 
-    @unittest.skip('')
     def test_total_urls(self):
         """Checking the total number of URLs found on the page"""
-        actual = self.check_html('index.html').get('total')
-        self.assertEqual(actual, 17)
+        actual, err = self.check_html('index.html')
+        self.assertEqual(actual.get('total'), 2)
+        self.assertIsNone(err, "No errors found")
 
 
 if __name__ == "__main__":
