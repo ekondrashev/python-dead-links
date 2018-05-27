@@ -54,8 +54,7 @@ class OutputTests(unittest.TestCase):
     def test_urls_404(self):
         """Checking URLs with status 404"""
         actual, err = self.check_html('index.html')
-        self.assertEqual(actual.get('404').get('size'), 2)
-        #self.assertEqual(actual.get('404').get('urls'), [])
+        self.assertEqual(actual.get('404').get('size'), 4)
         self.assertEqual(len(actual.get('404').get('urls')), actual.get('404').get('size'))
         self.assertIsNone(err, "No errors found")
 
@@ -63,20 +62,19 @@ class OutputTests(unittest.TestCase):
         """Checking URLs with status 50x"""
         actual, err = self.check_html('index.html')
         self.assertEqual(actual.get('50x').get('size'), 0)
-        #self.assertEqual(actual.get('50x').get('urls'), [])
         self.assertEqual(len(actual.get('50x').get('urls')), actual.get('50x').get('size'))
         self.assertIsNone(err, "No errors found")
 
     def test_total_dead_urls(self):
         """Checking the total number of broken URLs"""
         actual, err = self.check_html('index.html')
-        self.assertEqual(actual.get('dead'), 2)
+        self.assertEqual(actual.get('dead'), 4)
         self.assertIsNone(err, "No errors found")
 
     def test_total_urls(self):
         """Checking the total number of URLs found on the page"""
         actual, err = self.check_html('index.html')
-        self.assertEqual(actual.get('total'), 2)
+        self.assertEqual(actual.get('total'), 6)
         self.assertIsNone(err, "No errors found")
 
 

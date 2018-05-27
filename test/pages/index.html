@@ -5,7 +5,13 @@
         <title>List of links for testing</title>
     </head>
     <body>
-        <a href="a.html">a</a><br />
-        <a href="index.html">bb</a><br />
+        <ul type="disc">
+            <li><a href="test/pages/index.html">Working relative link (status code: 200)</a>
+            <li><a href="a.html">Broken relative link (status code: 404)</a>
+            <li><a href="http://google.com">Working absolute link (status code: 200)</a>
+            <li><a href="index.html">Another broken relative link (status code: 404)</a>
+            <li><a href="http://google.com/broken">Broken absolute link (status code: 404)</a>
+            <li><a href="google.com/broken">Broken absolute link without specifying a protocol (status code: 404)</a>
+        </ul>
     </body>
 </html>
