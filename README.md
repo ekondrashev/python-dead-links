@@ -1,9 +1,16 @@
+# Important considerations
+* Attention to requirement details counts
+* No commented code
+* No unnecessary changes(like changing `README.md`)
+* Each PR should be created against current `stepX`
+
 # Step 1
-Please suggest a PR with 
+Please suggest a PR with
 1. a python script implementing the below contract
 2. a test verifying standard output produced by the script is correct
+  * make sure to create a test in a `tests` folder
 
-*hint: the test should call the script, catching std output and verifying its correctness by asseting against some constant expected value*
+*hint: the test should call the script, catching std output and verifying its correctness by asserting against some constant expected value*
 
 # Python dead links
 
