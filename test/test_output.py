@@ -9,10 +9,12 @@ import json
 
 
 class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):
+    """Configuring a simple HTTP-request handler"""
     buffer = 1
     log_file = open('test/server.log', 'w', buffer)
     
     def log_message(self, format, *args):
+        """Configuring the logging of requests to the HTTP-server"""
         self.log_file.write("%s - - [%s] %s\n" %
             (self.client_address[0],
             self.log_date_time_string(),
@@ -24,7 +26,7 @@ class OutputTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """Running the HTTP server"""
+        """Running the HTTP-server on an idle port"""
         sock = socket.socket(socket.AF_INET, type=socket.SOCK_STREAM)
         sock.bind(('localhost', 0))
         cls._address, cls._port = sock.getsockname()
@@ -35,12 +37,15 @@ class OutputTests(unittest.TestCase):
         server_thread.start()
 
     def setUp(self):
+        """Initializing the URL value before running each test"""
         self._url = 'http://localhost:{port}/test/pages/'.format(port=self._port)
 
     def tearDown(self):
+        """Clear the URL value after each test"""
         self._url = None
 
     def check_html(self, page):
+        """Running the main script and getting the results of its work"""
         self._url += page
         output, err = Popen(['python', 'main.py', self._url], stdout=PIPE).communicate()
         return json.loads(output), err
@@ -52,14 +57,14 @@ class OutputTests(unittest.TestCase):
         self.assertIsNone(err, "No errors found")
 
     def test_urls_404(self):
-        """Checking URLs with status 404"""
+        """Checking URLs with status code 404"""
         actual, err = self.check_html('index.html')
         self.assertEqual(actual.get('404').get('size'), 4)
         self.assertEqual(len(actual.get('404').get('urls')), actual.get('404').get('size'))
         self.assertIsNone(err, "No errors found")
 
     def test_urls_50x(self):
-        """Checking URLs with status 50x"""
+        """Checking URLs with status code 50x"""
         actual, err = self.check_html('index.html')
         self.assertEqual(actual.get('50x').get('size'), 1)
         self.assertEqual(len(actual.get('50x').get('urls')), actual.get('50x').get('size'))
