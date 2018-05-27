@@ -2,7 +2,7 @@
 * Attention to requirement details counts
 * No commented code
 * No unnecessary changes(like changing `README.md`)
-* Each PR should be created against current `stepX`
+* Each PR should be created against current `stepX` branch, except `Step 1` which should be created against `mater`
 
 # Step 1
 Please suggest a PR with
