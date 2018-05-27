@@ -7,8 +7,10 @@ import json
 
 
 class Links(object):
+    """Collection of links found on the given page"""
 
     def __init__(self, url):
+        """Initializing URL, Protocol, and Host Values"""
         self._url = url
         self._protocol = url.split('://')[0] if url.find('://')>0 else 'http'
         self._host = url.split('://')[1].split('/')[0]
@@ -27,16 +29,20 @@ class Links(object):
                 yield url
 
     def __len__(self):
+        """The number of links found on the page"""
         return len([link for link in self])
 
 
 class FilteredLinks(object):
+    """Collection of links found by a given criterion"""
 
     def __init__(self, links, live):
+        """Initializing Wrapper Class Fields"""
         self._links = links
         self._live = live
 
     def __iter__(self):
+        """Iteration on filtered links"""
         for link in self._links:
             response = requests.head(link, allow_redirects=True)
             if (self._live and response.ok)\
@@ -44,22 +50,28 @@ class FilteredLinks(object):
                 yield (response.status_code, response.url)
 
     def __len__(self):
+        """Number of filtered links"""
         return len([link for link in self])
 
 
 class LiveLinks(FilteredLinks):
+    """Collection of live links"""
 
     def __init__(self, links):
+        """Initializing a wrapper class for live links"""
         super(LiveLinks, self).__init__(links, True)
 
 
 class DeadLinks(FilteredLinks):
+    """Collection of dead links"""
 
     def __init__(self, links):
+        """Initializing a wrapper class for dead links"""
         super(DeadLinks, self).__init__(links, False)
 
 
 def check_url(url):
+    """The analysis of detected links and the receipt of a report"""
     all_links = Links(url)
     result = {
         'url': url,
