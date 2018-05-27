@@ -61,20 +61,20 @@ class OutputTests(unittest.TestCase):
     def test_urls_50x(self):
         """Checking URLs with status 50x"""
         actual, err = self.check_html('index.html')
-        self.assertEqual(actual.get('50x').get('size'), 0)
+        self.assertEqual(actual.get('50x').get('size'), 1)
         self.assertEqual(len(actual.get('50x').get('urls')), actual.get('50x').get('size'))
         self.assertIsNone(err, "No errors found")
 
     def test_total_dead_urls(self):
         """Checking the total number of broken URLs"""
         actual, err = self.check_html('index.html')
-        self.assertEqual(actual.get('dead'), 4)
+        self.assertEqual(actual.get('dead'), 5)
         self.assertIsNone(err, "No errors found")
 
     def test_total_urls(self):
         """Checking the total number of URLs found on the page"""
         actual, err = self.check_html('index.html')
-        self.assertEqual(actual.get('total'), 6)
+        self.assertEqual(actual.get('total'), 7)
         self.assertIsNone(err, "No errors found")
 
 
